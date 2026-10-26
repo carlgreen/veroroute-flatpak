@@ -19,7 +19,7 @@ jobs:
       - name: Build flatpak
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
-          manifest-path: io.github.carlgreen.VeroRoute.yaml
+          manifest-path: io.github.carlgreen.VeroRoute.yml
           bundle: veroroute.flatpak
           cache-key: flatpak-builder-${{ github.sha }}
 
