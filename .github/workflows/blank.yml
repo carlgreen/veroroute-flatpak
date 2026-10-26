@@ -1,0 +1,30 @@
+name: build VeroRoute flatpak
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-46
+      options: --privileged
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build flatpak
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          manifest: io.github.carlgreen.VeroRoute.yaml
+          bundle: veroroute.flatpak
+          cache-key: flatpak-builder-${{ github.sha }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: veroroute-flatpak-bundle
+          path: veroroute.flatpak
