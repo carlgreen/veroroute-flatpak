@@ -1,0 +1,33 @@
+id: io.github.carlgreen.VeroRoute
+runtime: org.kde.Platform
+runtime-version: '5.15-25.08'
+sdk: org.kde.Sdk
+command: veroroute
+finish-args:
+  - "--share=ipc"
+  - "--socket=x11"
+  - "--socket=wayland"
+  - "--device=dri"
+  - "--share=network"
+modules:
+  - name: veroroute
+    buildsystem: qmake
+    subdir: trunk/src
+    sources:
+      - type: svn
+        url: https://svn.code.sf.net/p/veroroute/code/
+        revision: '666'
+      - type: file
+        path: io.github.carlgreen.VeroRoute.metainfo.xml
+    post-install:
+      # patch upstream icon file name in desktop
+      - sed -i 's/^Icon=veroroute/Icon=io.github.carlgreen.VeroRoute/' ../veroroute.desktop
+      - install -Dm644 ../veroroute.desktop /app/share/applications/io.github.carlgreen.VeroRoute.desktop
+
+      # # patch upstream appdata to fix id, change component type, and remove icon tag
+      # - sed -i 's|<id>veroroute.desktop</id>|<id>io.github.carlgreen.VeroRoute</id>|' ../veroroute.appdata.xml
+      # - sed -i 's|type="desktop"|type="desktop-application"|' ../veroroute.appdata.xml
+      # - sed -i '/<icon type="stock">veroroute<\/icon>/d' ../veroroute.appdata.xml
+      # - install -Dm644 ../veroroute.appdata.xml /app/share/metainfo/io.github.carlgreen.VeroRoute.metainfo.xml
+
+      - install -Dm644 ../veroroute.png /app/share/icons/hicolor/128x128/apps/io.github.carlgreen.VeroRoute.png
