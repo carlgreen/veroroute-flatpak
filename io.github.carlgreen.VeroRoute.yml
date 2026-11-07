@@ -22,6 +22,7 @@ modules:
     post-install:
       # patch upstream icon file name in desktop
       - sed -i 's/^Icon=veroroute/Icon=io.github.carlgreen.VeroRoute/' ../veroroute.desktop
+      - sed -i '/^Path=/d' ../veroroute.desktop
       - install -Dm644 ../veroroute.desktop /app/share/applications/io.github.carlgreen.VeroRoute.desktop
 
       # # patch upstream appdata to fix id, change component type, and remove icon tag
