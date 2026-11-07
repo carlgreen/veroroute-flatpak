@@ -9,6 +9,7 @@ finish-args:
   - "--socket=wayland"
   - "--device=dri"
   - "--share=network"
+  - "--filesystem=host" # Allows direct native writing without the portal FUSE proxy layer
 modules:
   - name: veroroute
     buildsystem: qmake
